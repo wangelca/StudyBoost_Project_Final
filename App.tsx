@@ -1,118 +1,121 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- */
-
 import React from 'react';
-import type {PropsWithChildren} from 'react';
-import {
-  SafeAreaView,
-  ScrollView,
-  StatusBar,
-  StyleSheet,
-  Text,
-  useColorScheme,
-  View,
-} from 'react-native';
+import { View, Text, StyleSheet, Image, Dimensions } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import CalendarScreen from './pages/CalendarScreen';
+import ClassesScreen from './pages/ClassesScreen';
+import SettingsScreen from './pages/SettingsScreen';
 
-import {
-  Colors,
-  DebugInstructions,
-  Header,
-  LearnMoreLinks,
-  ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen';
+const Tab = createBottomTabNavigator();
 
-type SectionProps = PropsWithChildren<{
-  title: string;
-}>;
+const HomeScreen: React.FC = () => (
+  <View style={styles.screenContainer}>
+    <Text style={styles.title}>STUDY BOOST</Text>
+    <Image source={require('./assets/homeimage.png')} style={styles.homeImage} />
+    <Text style={styles.motivationalText}>The mind is not a vessel to be filled but a fire to be ignited.</Text>
+    <Text style={styles.motivationalText}>-Plutarch</Text>
+  </View>
+);
 
-function Section({children, title}: SectionProps): React.JSX.Element {
-  const isDarkMode = useColorScheme() === 'dark';
+const App: React.FC = () => {
   return (
-    <View style={styles.sectionContainer}>
-      <Text
-        style={[
-          styles.sectionTitle,
-          {
-            color: isDarkMode ? Colors.white : Colors.black,
+    <NavigationContainer>
+      <Tab.Navigator
+        screenOptions={({ route }) => ({
+          tabBarLabel: route.name,
+          headerShown: false,
+          tabBarLabelStyle: {
+            fontSize: 20,
+            fontWeight: 'bold',
+            textAlign: 'center',
+            marginBottom: 5,
+            paddingBottom: 5,
           },
-        ]}>
-        {title}
-      </Text>
-      <Text
-        style={[
-          styles.sectionDescription,
-          {
-            color: isDarkMode ? Colors.light : Colors.dark,
+          tabBarStyle: {
+            backgroundColor: '#003366',
+            paddingBottom: 5,
+            elevation: 0,
+            borderTopWidth: 0,
+            height: 60,
+            borderRadius: 0,
+            overflow: 'visible',
+            marginBottom: 0,
           },
-        ]}>
-        {children}
-      </Text>
-    </View>
+          tabBarActiveTintColor: 'white',
+          tabBarInactiveTintColor: 'grey',
+          tabBarIcon: () => null,
+        })}
+      >
+        <Tab.Screen name="Home" component={HomeScreen} />
+        <Tab.Screen name="Calendar" component={CalendarScreen} />
+        <Tab.Screen name="Classes" component={ClassesScreen} />
+        <Tab.Screen name="Settings" component={SettingsScreen} />
+      </Tab.Navigator>
+    </NavigationContainer>
   );
-}
-
-function App(): React.JSX.Element {
-  const isDarkMode = useColorScheme() === 'dark';
-
-  const backgroundStyle = {
-    backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
-  };
-
-  return (
-    <SafeAreaView style={backgroundStyle}>
-      <StatusBar
-        barStyle={isDarkMode ? 'light-content' : 'dark-content'}
-        backgroundColor={backgroundStyle.backgroundColor}
-      />
-      <ScrollView
-        contentInsetAdjustmentBehavior="automatic"
-        style={backgroundStyle}>
-        <Header />
-        <View
-          style={{
-            backgroundColor: isDarkMode ? Colors.black : Colors.white,
-          }}>
-          <Section title="Step One">
-            Edit <Text style={styles.highlight}>App.tsx</Text> to change this
-            screen and then come back to see your edits.
-          </Section>
-          <Section title="See Your Changes">
-            <ReloadInstructions />
-          </Section>
-          <Section title="Debug">
-            <DebugInstructions />
-          </Section>
-          <Section title="Learn More">
-            Read the docs to discover what to do next:
-          </Section>
-          <LearnMoreLinks />
-        </View>
-      </ScrollView>
-    </SafeAreaView>
-  );
-}
+};
 
 const styles = StyleSheet.create({
-  sectionContainer: {
-    marginTop: 32,
-    paddingHorizontal: 24,
+  container: {
+    flex: 1,
+    backgroundColor: '#305d8f',
   },
-  sectionTitle: {
+  title: {
+    fontSize: 36,
+    fontWeight: 'bold',
+    marginBottom: 10,
+    color: 'white',
+    textAlign: 'center',
+  },
+  motivationalText: {
+    fontSize: 20,
+    color: 'white',
+    textAlign: 'center',
+    paddingHorizontal: 20,
+    marginTop: 10,
+    fontStyle: 'italic',
+  },
+  screenContainer: {
+    flex: 1,
+    backgroundColor: '#305d8f',
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 10,
+  },
+  screenText: {
     fontSize: 24,
-    fontWeight: '600',
+    color: 'white',
   },
-  sectionDescription: {
-    marginTop: 8,
-    fontSize: 18,
-    fontWeight: '400',
-  },
-  highlight: {
-    fontWeight: '700',
+  homeImage: {
+    width: Dimensions.get('window').width,
+    height: Dimensions.get('window').height * 0.4,
+    resizeMode: 'cover',
+    marginVertical: 20,
   },
 });
 
 export default App;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
